@@ -12,6 +12,6 @@ def test_add_item_button_exist(browser):
     browser.get(link)
     browser.find_element(By.XPATH, "//button[contains(@class, 'btn-add-to-basket')]")
     
-    time.sleep(10)
+    time.sleep(5)
     
     

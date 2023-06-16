@@ -11,19 +11,18 @@ def pytest_addoption(parser):
     parser.addoption('--language', action='store', default=None,
                      help="Choose language: ru, en, es, etc.")
 
-# for Chrome
-options = Options()
-options.add_experimental_option('prefs', {'intl.accept_languages': "language"})
-
-# for FF
-fp = OptionsFirefox()
-fp.set_preference("intl.accept_languages", "language")
-
 @pytest.fixture(scope="function")
 def browser(request):
     browser_name = request.config.getoption("browser_name")
     user_language = request.config.getoption("language")
     browser = None
+    # for Chrome
+    options = Options()
+    options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
+    # for FF
+    fp = OptionsFirefox()
+    fp.set_preference("intl.accept_languages", user_language)
+    
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         browser = webdriver.Chrome(options=options)
